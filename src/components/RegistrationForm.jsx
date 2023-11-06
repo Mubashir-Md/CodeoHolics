@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { doc } from "firebase/firestore";
-import { db } from "./src/firebase";
+import { db } from "src/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
