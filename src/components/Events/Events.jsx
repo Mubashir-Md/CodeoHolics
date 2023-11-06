@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import OngoingEvents from "./OngoingEvents";
 import PastEvents from "./PastEvents";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase";
