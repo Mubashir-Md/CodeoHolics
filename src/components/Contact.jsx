@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import contact from "../assets/contact.jpg";
+import contact from "./src/assets/contact.jpg";
 import { FaGlobe, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import NavBar from "./NavBar";
 

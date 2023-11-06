@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import NavBar from "./NavBar";
-import bg from "../assets/bg.jpg";
-import Logo from "../assets/codeoholics.jpeg";
+import bg from "./src/assets/bg.jpg";
+import Logo from "./src/assets/codeoholics.jpeg";
 
 const Home = () => {
   return (

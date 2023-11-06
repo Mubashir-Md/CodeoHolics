@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../assets/codeoholics.jpeg";
+import Logo from "./src/assets/codeoholics.jpeg";
 import { Page, Text, Document, StyleSheet } from "@react-pdf/renderer";
 
 function EventTicket({ userDetails }) {

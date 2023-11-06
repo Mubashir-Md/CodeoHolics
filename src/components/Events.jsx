@@ -6,7 +6,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "./src/firebase";
 import UpcomingEvents from "./UpcomingEvent";
 import NavBar from "./NavBar";
-import Event from "../../assets/events.jpg";
+import Event from "./src/assets/events.jpg";
 
 const Events = () => {
   const nav = useNavigate();

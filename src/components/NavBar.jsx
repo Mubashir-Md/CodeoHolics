@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import LogoImage from "../assets/codeoholics.jpeg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LogoImage from "./src/assets/codeoholics.jpeg";
 import { FaBars } from "react-icons/fa";
 
 const NavBar = () => {
