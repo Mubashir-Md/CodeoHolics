@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import Events from "./components/Events/Events";
-import HostEvent from "./components/Events/HostEvent";
-import RegistrationForm from "./components/Events/RegistrationForm";
-import RegSuccess from "./components/Events/RegSuccess";
-import EventDetails from "./components/Events/EventDetails";
+import Events from "./components/Events";
+import HostEvent from "./components/HostEvent";
+import RegistrationForm from "./components/RegistrationForm";
+import RegSuccess from "./components/RegSuccess";
+import EventDetails from "./components/EventDetails";
 import Contact from "./components/Contact";
 import About from "./components/About";
 

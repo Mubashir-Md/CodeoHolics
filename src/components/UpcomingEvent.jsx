@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Poster from "../../assets/Hack4mini.jpeg";
 import { useNavigate } from "react-router-dom";
-import { auth, db, provider } from "../../firebase";
+import { auth, db, provider } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { signInWithPopup } from "firebase/auth";
 

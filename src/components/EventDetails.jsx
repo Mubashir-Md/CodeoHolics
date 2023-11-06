@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { collection, doc, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-import NavBar from "../NavBar";
+import { db } from "../firebase";
+import NavBar from "./NavBar";
 function EventDetails() {
   const { eventName } = useParams();
   const [registrations, setRegistrations] = useState([]);
