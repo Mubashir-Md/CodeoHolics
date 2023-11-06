@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Poster from "../../assets/Hack4mini.jpeg";
-import { db } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { auth, db, provider } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { signInWithPopup } from "firebase/auth";
 
 const UpcomingEvents = () => {
+  const nav = useNavigate();
+  const [user, setUser] = useState("");
   const [upcomingEvents, setUpcomingEvents] = useState([]);
 
   useEffect(() => {
@@ -25,6 +29,29 @@ const UpcomingEvents = () => {
     fetchEvents();
   }, []);
 
+  const gotoForm = (eventName) => {
+    const event = eventName;
+    nav(`/register/${event}`);
+  };
+
+  const gotoDetails = (eventName) => {
+    const event = eventName;
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        const user = data.user;
+        const userEmail = user.email;
+        if (userEmail === "mdmubashirahmed12345@gmail.com") {
+          nav(`/event-details/${eventName}`);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <EventsWrapper>
       {upcomingEvents.map((event) => (
@@ -33,7 +60,17 @@ const UpcomingEvents = () => {
           <h2>{event.eventName}</h2>
           <p>{event.eventDescription}</p>
           <p>{event.eventDate}</p>
-          <a href={event.eventLink} target="_blank">Register Here</a>
+          <Buttons>
+            <button onClick={() => gotoForm(event.eventName)} target="_blank">
+              Register Here
+            </button>
+            <button
+              onClick={() => gotoDetails(event.eventName)}
+              target="_blank"
+            >
+              Event Details
+            </button>
+          </Buttons>
         </EventsUpcoming>
       ))}
     </EventsWrapper>
@@ -64,15 +101,20 @@ const EventsUpcoming = styled.div`
     height: 50%;
     border-radius: 5px;
   }
-  a{
-    text-decoration: none;
-    color: #fff;
-    background-color: #000;
+  button {
     margin: 10px;
-    padding: 5px 10px; 
-    width: 10em;
-    text-align: center;
-    border-radius: 5px;
-    font-size: 1.2em;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
   }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;

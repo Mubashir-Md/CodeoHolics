@@ -5,9 +5,10 @@ import { db, storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
+
 const HostEvent = () => {
 
-  const nav = useNavigate();
+  const nav = useNavigate();    
   const [eventData, setEventData] = useState({
     eventName: "",
     eventDescription: "",
@@ -48,7 +49,7 @@ const HostEvent = () => {
           eventDate: eventData.eventDate,
           eventLink: eventData.eventLink,
           eventPoster: imageURL,
-        });
+        }, eventData.eventName);
         console.log("Event doc written with ID: ", docRef.id);
 
         nav("/events")
