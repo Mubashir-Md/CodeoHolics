@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Poster from "src/assets/Hack4mini.jpeg"
+import Poster from "../assets/hack4mini.jpg"
 
 const PastEvents = () => {
   return (

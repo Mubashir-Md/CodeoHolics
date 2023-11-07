@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PastEvents from "./PastEvents";
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "src/firebase";
+import { auth, provider } from "../firebase";
 import UpcomingEvents from "./UpcomingEvent";
 import NavBar from "./NavBar";
-import Event from "src/assets/events.jpg";
+import Event from "../assets/events.jpg";
 
 const Events = () => {
   const nav = useNavigate();

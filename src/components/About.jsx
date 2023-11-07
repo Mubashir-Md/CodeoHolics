@@ -1,9 +1,9 @@
 import React from "react";
 import NavBar from "./NavBar";
-import about from "src/assets/about.jpg";
+import about from "../assets/about.jpg";
 import styled from "styled-components";
 import { FaInstagram } from "react-icons/fa";
-import Person from "src/assets/person.jpg";
+import Person from "../assets/person.jpg";
 
 const About = () => {
   return (

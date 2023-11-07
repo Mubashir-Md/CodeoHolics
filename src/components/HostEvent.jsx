@@ -1,7 +1,7 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { db, storage } from "src/firebase";
+import { db, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
