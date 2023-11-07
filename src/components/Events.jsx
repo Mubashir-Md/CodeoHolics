@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PastEvents from "./PastEvents";
@@ -8,9 +8,11 @@ import UpcomingEvents from "./UpcomingEvent";
 import NavBar from "./NavBar";
 import Event from "../assets/events.jpg";
 import { BiSolidLockAlt } from "react-icons/bi";
+import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const Events = () => {
   const nav = useNavigate();
+  const {isDarkMode, toggleDarkMode} = useContext(ThemeContext);
   const [user, setUser] = useState("");
   const handleSignIn = () => {
     signInWithPopup(auth, provider)
@@ -37,9 +39,9 @@ const Events = () => {
   };
   return (
     <Wrapper>
-      <Card>
+      <Card isDarkMode={isDarkMode}>
         <NavBar />
-        <EventsPage>
+        <EventsPage isDarkMode={isDarkMode}>
           {/* <OngoingEvents /> */}
           <button className="google" onClick={handleSignIn}>
             Host an Event <BiSolidLockAlt/>
@@ -75,8 +77,7 @@ const Wrapper = styled.div`
 const Card = styled.div`
   backdrop-filter: blur(12px) saturate(200%);
   -webkit-backdrop-filter: blur(14px) saturate(200%);
-  background-color: rgba(255, 255, 255, 0.78);
-  border-radius: 12px;
+  background-color: ${({isDarkMode})=> isDarkMode ? "rgba(0,0,0,0.78)" : "rgba(255, 255, 255, 0.78)"};
   border: 1px solid rgba(209, 213, 219, 0.3);
   height: 100dvh;
   overflow: auto;
@@ -89,8 +90,9 @@ const EventsPage = styled.div`
     margin: 10px auto;
     padding: 10px 20px;
     border-radius: 10px;
-    border: 2px solid #000;
-    background-color: #fff;
+    border: ${({ isDarkMode }) => isDarkMode ? "2px solid #fff" : "2px solid #000"};
+    background: transparent;
+    color: ${({ isDarkMode }) => isDarkMode ? "#fff" : "#000"};
     cursor: pointer;
     font-size: 1.2rem;
     display: flex;
@@ -108,7 +110,8 @@ const EventsPage = styled.div`
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    color: ${({ isDarkMode }) => isDarkMode ? "#fff" : "#000"};
   }
 
   @media (max-width: 768px) {
@@ -124,6 +127,7 @@ const Upcoming = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
 `;
 
 const Past = styled.div`
@@ -132,4 +136,10 @@ const Past = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { doc } from "firebase/firestore";
@@ -7,9 +7,11 @@ import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import fillform from "../assets/fillform.jpg";
+import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const RegistrationForm = () => {
   const nav = useNavigate();
+  const {isDarkMode, toggleDarkMode} = useContext(ThemeContext);
   const { eventName } = useParams();
   console.log({ eventName });
 
@@ -38,7 +40,7 @@ const RegistrationForm = () => {
   return (
     <Wrapper>
       <Card>
-        <NavBar />
+        <NavBar isDarkMode={ isDarkMode} />
         <FormWrapper>
           <h1>Register for the event here</h1>
           <Register onSubmit={handleSubmit}>

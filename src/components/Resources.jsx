@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import resource from "../assets/resources.jpg";
 import styled from "styled-components";
 import NavBar from "./NavBar";
@@ -7,9 +7,11 @@ import { auth, provider } from "../firebase";
 import { BiSolidLockAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const Resources = () => {
   const nav = useNavigate();
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [user, setUser] = useState("");
   const handleSignIn = () => {
     signInWithPopup(auth, provider)
@@ -36,9 +38,9 @@ const Resources = () => {
   };
   return (
     <ResourceHome>
-      <Card>
+      <Card isDarkMode={isDarkMode}>
         <NavBar />
-        <ResourcesContent>
+        <ResourcesContent isDarkMode={ isDarkMode}>
           <button className="google" onClick={handleSignIn}>
             Share a Resource <BiSolidLockAlt />
           </button>
@@ -63,8 +65,7 @@ const ResourceHome = styled.div`
 const Card = styled.div`
   backdrop-filter: blur(10px) saturate(200%);
   -webkit-backdrop-filter: blur(4px) saturate(200%);
-  background-color: rgba(255, 255, 255, 0.78);
-  border-radius: 12px;
+  background-color: ${({ isDarkMode }) => isDarkMode ? "rgba(0, 0, 0, 0.78)" : "rgba(255, 255, 255, 0.78)"};
   border: 1px solid rgba(209, 213, 219, 0.3);
   height: 100dvh;
 `;
@@ -79,13 +80,15 @@ const ResourcesContent = styled.div`
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
+    color: ${({ isDarkMode }) => isDarkMode ? "#fff" : "#000"};
   }
   button.google {
     margin: 10px auto;
     padding: 10px 20px;
     border-radius: 10px;
-    border: 2px solid #000;
-    background-color: #fff;
+    border: ${({ isDarkMode }) => isDarkMode ? "2px solid #fff" : "2px solid #000"};
+    background-color: transparent;
+    color: ${({ isDarkMode }) => isDarkMode ? "#fff" : "#000"};
     cursor: pointer;
     font-size: 1.2rem;
     display: flex;

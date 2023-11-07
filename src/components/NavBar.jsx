@@ -7,13 +7,9 @@ import { PiToggleRightFill, PiToggleLeftFill } from "react-icons/pi";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const NavBar = () => {
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
-
-  const handleClick = () => {
-    toggleDarkMode();
-  };
 
   // Update the window width when the window is resized
   useEffect(() => {
@@ -34,10 +30,10 @@ const NavBar = () => {
   return (
     <NavComponent>
       {windowWidth <= 700 && (
-        <IconWrapper>
+        <IconWrapper isDarkMode={isDarkMode}>
           <ImageButton className="image">
             <img src={LogoImage} />
-            <ToggleButton onClick={handleClick} isDarkMode={isDarkMode}>
+            <ToggleButton onClick={toggleDarkMode} isDarkMode={isDarkMode}>
               {isDarkMode ? <PiToggleRightFill /> : <PiToggleLeftFill />}
             </ToggleButton>
           </ImageButton>
@@ -47,35 +43,35 @@ const NavBar = () => {
       {isMenuOpen && windowWidth <= 700 && (
         <>
           <ul>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/" isDarkMode={isDarkMode}>
+              <a href="/">
                 {" "}
                 Home
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/events" isDarkMode={isDarkMode}>
+              <a href="/events">
                 {" "}
                 Events
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/resources" isDarkMode={isDarkMode}>
+              <a href="/resources">
                 Resources
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/internships" isDarkMode={isDarkMode}>
+              <a href="/internships">
                 Internships
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/contact" isDarkMode={isDarkMode}>
+              <a href="/contact">
                 {" "}
                 Contact
               </a>
@@ -87,40 +83,40 @@ const NavBar = () => {
         <>
           <ImageButton className="image">
             <img src={LogoImage} />
-            <ToggleButton onClick={handleClick}>
+            <ToggleButton onClick={toggleDarkMode} isDarkMode={isDarkMode}>
               {isDarkMode ? <PiToggleRightFill /> : <PiToggleLeftFill />}
             </ToggleButton>
           </ImageButton>
           <ul>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/" isDarkMode={isDarkMode}>
+              <a href="/">
                 {" "}
                 Home
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/events" isDarkMode={isDarkMode}>
+              <a href="/events">
                 {" "}
                 Events
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/resources" isDarkMode={isDarkMode}>
+              <a href="/resources">
                 Resources
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/internships" isDarkMode={isDarkMode}>
+              <a href="/internships">
                 Internships
               </a>
             </List>
-            <List>
+            <List isDarkMode={isDarkMode}>
               {" "}
-              <a href="/contact" isDarkMode={isDarkMode}>
+              <a href="/contact">
                 {" "}
                 Contact
               </a>
@@ -185,14 +181,15 @@ const List = styled.li`
   cursor: pointer;
   margin: 10px;
   a {
-    color: black;
+    color: ${({ isDarkMode }) => (isDarkMode ? "white" : "black")};
     text-decoration: none;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 700px) and (min-width: 280px) {
 
     a {
       font-size: 1rem;
       text-decoration: none;
+      color: ${({ isDarkMode }) => (isDarkMode ? "white" : "black")};
     }
     
   }
@@ -215,6 +212,7 @@ const IconWrapper = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    color: ${({ isDarkMode }) => (isDarkMode ? "white" : "black")};
   }
 `;
 
@@ -239,6 +237,7 @@ const ToggleButton = styled.button`
   svg{
     width: 1.5em;
     height: 1.5em;
+    color: ${({ isDarkMode }) => isDarkMode ? "white" : "black"};
   }
 
   @media (max-width: 700px) {

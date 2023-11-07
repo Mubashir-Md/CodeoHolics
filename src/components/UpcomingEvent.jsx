@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { auth, db, provider } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { signInWithPopup } from "firebase/auth";
+import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const UpcomingEvents = () => {
   const nav = useNavigate();
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [user, setUser] = useState("");
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -54,7 +57,7 @@ const UpcomingEvents = () => {
   return (
     <EventsWrapper>
       {upcomingEvents.map((event) => (
-        <EventsUpcoming key={event.id}>
+        <EventsUpcoming key={event.id} isDarkMode={isDarkMode}>
           <img src={event.eventPoster} alt="" />
           <div className="details">
             <h2>{event.eventName}</h2>
@@ -93,7 +96,7 @@ const EventsUpcoming = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #000;
+  border: ${({isDarkMode}) => isDarkMode ? "2px solid #fff" : "2px solid #000"};
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
@@ -107,18 +110,22 @@ const EventsUpcoming = styled.div`
     margin: 10px;
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: #000;
-    color: #fff;
+    background-color: ${({isDarkMode}) => isDarkMode ? "#fff" : "#000"};
+    color: ${({isDarkMode}) => isDarkMode ? "#000" : "#fff"};
     border: none;
     cursor: pointer;
   }
   .details {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     padding: 10px;
     margin: 10px;
+    color: ${({isDarkMode}) => isDarkMode ? "#fff" : "#000"};
+  }
+  .details > *{
+    margin: 5px;
   }
 `;
 
