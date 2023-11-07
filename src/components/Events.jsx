@@ -4,6 +4,8 @@ import styled from "styled-components";
 import PastEvents from "./PastEvents";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
+// this above import is failing at build time, help me pls
+
 import UpcomingEvents from "./UpcomingEvent";
 import NavBar from "./NavBar";
 import Event from "../assets/events.jpg";
