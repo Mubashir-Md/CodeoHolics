@@ -121,15 +121,11 @@ const Register = styled.form`
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    border: 2px solid #000;
-    background-color: #fff;
   }
   button {
     margin: 10px;
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: #000;
-    color: #fff;
     border: none;
     cursor: pointer;
   }

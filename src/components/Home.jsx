@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import NavBar from "./NavBar";
 import about from "../assets/about.jpg";
@@ -6,10 +6,13 @@ import Logo from "../assets/codeoholics.jpg";
 import { FaInstagram } from "react-icons/fa";
 import Person from "../assets/person.jpg";
 
+import { ThemeContext } from "../contexts/ThemeContextProvider";
+
 const Home = () => {
+  const { isDarkMode } = useContext(ThemeContext);
   return (
     <HomeWrapper>
-      <Card>
+      <Card isDarkMode={isDarkMode}>
         <NavBar />
         <HomePage>
           <div className="image">
@@ -29,7 +32,7 @@ const Home = () => {
         <Team>
           <h1>Meet the Team</h1>
           <TeamMembers>
-            <TeamMember>
+            <TeamMember isDarkMode={isDarkMode}>
               <img src={Person} alt="" />
               <div className="content">
                 <h2>Abdul Basit</h2>
@@ -37,7 +40,7 @@ const Home = () => {
                 <FaInstagram />
               </div>
             </TeamMember>
-            <TeamMember>
+            <TeamMember isDarkMode={isDarkMode}>
               <img src={Person} alt="" />
               <div className="content">
                 <h2>Abdul Basit</h2>
@@ -45,7 +48,7 @@ const Home = () => {
                 <FaInstagram />
               </div>
             </TeamMember>
-            <TeamMember>
+            <TeamMember isDarkMode={isDarkMode}>
               <img src={Person} alt="" />
               <div className="content">
                 <h2>Abdul Basit</h2>
@@ -53,7 +56,7 @@ const Home = () => {
                 <FaInstagram />
               </div>
             </TeamMember>
-            <TeamMember>
+            <TeamMember isDarkMode={isDarkMode}>
               <img src={Person} alt="" />
               <div className="content">
                 <h2>Abdul Basit</h2>
@@ -61,15 +64,7 @@ const Home = () => {
                 <FaInstagram />
               </div>
             </TeamMember>
-            <TeamMember>
-              <img src={Person} alt="" />
-              <div className="content">
-                <h2>Abdul Basit</h2>
-                <p>President</p>
-                <FaInstagram />
-              </div>
-            </TeamMember>
-            <TeamMember>
+            <TeamMember isDarkMode={isDarkMode}>
               <img src={Person} alt="" />
               <div className="content">
                 <h2>Abdul Basit</h2>
@@ -98,8 +93,11 @@ const HomeWrapper = styled.div`
 const Card = styled.div`
   backdrop-filter: blur(4px) saturate(200%);
   -webkit-backdrop-filter: blur(14px) saturate(200%);
-  background-color: rgba(255, 255, 255, 0.78);
-  height: 100dvh;
+  
+  background-color: ${({ isDarkMode }) =>
+    isDarkMode ? "rgba(0,0,0,0.78)" : "rgba(255, 255, 255, 0.78)"};
+  color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
+    height: 100dvh;
   overflow: auto;
 `;
 
@@ -168,8 +166,6 @@ const HomePage = styled.div`
   }
 `;
 
-
-
 const Team = styled.div`
   display: flex;
   flex-direction: column;
@@ -197,7 +193,7 @@ const TeamMember = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border: 2px solid #000;
+  border: ${({ isDarkMode }) => isDarkMode ? "2px solid #fff" : "2px solid #000"};
   margin: 20px;
   border-radius: 10px;
   img {

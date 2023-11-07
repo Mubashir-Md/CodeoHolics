@@ -11,24 +11,32 @@ import Contact from "./components/Contact";
 import Internships from "./components/Internships";
 import Resources from "./components/Resources";
 import PostInternship from "./components/PostInternship";
-
+import { ThemeContextProvider } from "./contexts/ThemeContextProvider";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/internships" element={<Internships />} />
-        <Route path="/internships/post" element={<PostInternship />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/events/hostevent" element={<HostEvent />} />
-        <Route path="/events/register/:eventName" element={<RegistrationForm />} />
-        <Route path="/events/event-details/:eventName" element={<EventDetails />} />
-        <Route path="/events/reg-success" element={<RegSuccess />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/internships" element={<Internships />} />
+          <Route path="/internships/post" element={<PostInternship />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/events/hostevent" element={<HostEvent />} />
+          <Route
+            path="/events/register/:eventName"
+            element={<RegistrationForm />}
+          />
+          <Route
+            path="/events/event-details/:eventName"
+            element={<EventDetails />}
+          />
+          <Route path="/events/reg-success" element={<RegSuccess />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeContextProvider>
   );
 }
 

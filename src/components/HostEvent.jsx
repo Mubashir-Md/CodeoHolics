@@ -5,6 +5,7 @@ import { db, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import admin from "../assets/admin.jpg";
+import NavBar from "./NavBar";
 
 const HostEvent = () => {
   const nav = useNavigate();
@@ -60,6 +61,7 @@ const HostEvent = () => {
   return (
     <Wrapper>
       <Card>
+        <NavBar/>
         <Hosting>
           <h1>Hey, welcome Admin</h1>
           <HostForm action="">
@@ -116,8 +118,8 @@ const Wrapper = styled.div`
 `;
 
 const Card = styled.div`
-    backdrop-filter: blur(12px) saturate(200%);
-    -webkit-backdrop-filter: blur(14px) saturate(200%);
+    backdrop-filter: blur(4px) saturate(200%);
+    -webkit-backdrop-filter: blur(4px) saturate(200%);
     background-color: rgba(255, 255, 255, 0.78);
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
@@ -132,20 +134,19 @@ const Hosting = styled.div`
   align-items: center;
 
   h1 {
-    color: #fff;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    background-color: #000;
   }
   button {
     margin: 10px;
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: #000;
-    color: #fff;
     border: none;
     cursor: pointer;
+    background-color: #000;
+    color: #fff;
+    font-size: 1rem;
   }
 `;
 const HostForm = styled.form`
@@ -155,15 +156,14 @@ const HostForm = styled.form`
   align-items: center;
   width: 50vw;
   // height: 50dvh;
+  border: 2px solid #000;
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  background-color: #000;
   input {
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    border: 2px solid #000;
-    background-color: #fff;
+    border: 2px 0 0 0 solid #000;
   }
 `;

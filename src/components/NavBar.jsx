@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import LogoImage from "../assets/codeoholics.jpg";
 import { FaBars } from "react-icons/fa";
+import { PiToggleRightFill, PiToggleLeftFill } from "react-icons/pi";
+import { ThemeContext } from "../contexts/ThemeContextProvider";
 
 const NavBar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+
+  const handleClick = () => {
+    toggleDarkMode();
+  };
 
   // Update the window width when the window is resized
   useEffect(() => {
@@ -28,64 +35,96 @@ const NavBar = () => {
     <NavComponent>
       {windowWidth <= 700 && (
         <IconWrapper>
-          <div className="image">
+          <ImageButton className="image">
             <img src={LogoImage} />
-          </div>
+            <ToggleButton onClick={handleClick} isDarkMode={isDarkMode}>
+              {isDarkMode ? <PiToggleRightFill /> : <PiToggleLeftFill />}
+            </ToggleButton>
+          </ImageButton>
           <FaBars onClick={() => setIsMenuOpen(!isMenuOpen)} />
         </IconWrapper>
       )}
       {isMenuOpen && windowWidth <= 700 && (
         <>
           <ul>
-            <li>
+            <List>
               {" "}
-              <a href="/"> Home</a>
-            </li>
-            <li>
+              <a href="/" isDarkMode={isDarkMode}>
+                {" "}
+                Home
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/events"> Events</a>
-            </li>
-            <li>
+              <a href="/events" isDarkMode={isDarkMode}>
+                {" "}
+                Events
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/resources">Resources</a>
-            </li>
-            <li>
+              <a href="/resources" isDarkMode={isDarkMode}>
+                Resources
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/internships">Internships</a>
-            </li>
-            <li>
+              <a href="/internships" isDarkMode={isDarkMode}>
+                Internships
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/contact"> Contact</a>
-            </li>
+              <a href="/contact" isDarkMode={isDarkMode}>
+                {" "}
+                Contact
+              </a>
+            </List>
           </ul>
         </>
       )}
       {windowWidth > 700 && (
         <>
-          <div className="image">
+          <ImageButton className="image">
             <img src={LogoImage} />
-          </div>
+            <ToggleButton onClick={handleClick}>
+              {isDarkMode ? <PiToggleRightFill /> : <PiToggleLeftFill />}
+            </ToggleButton>
+          </ImageButton>
           <ul>
-            <li>
+            <List>
               {" "}
-              <a href="/"> Home</a>
-            </li>
-            <li>
+              <a href="/" isDarkMode={isDarkMode}>
+                {" "}
+                Home
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/events"> Events</a>
-            </li>
-            <li>
+              <a href="/events" isDarkMode={isDarkMode}>
+                {" "}
+                Events
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/resources">Resources</a>
-            </li>
-            <li>
+              <a href="/resources" isDarkMode={isDarkMode}>
+                Resources
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/internships">Internships</a>
-            </li>
-            <li>
+              <a href="/internships" isDarkMode={isDarkMode}>
+                Internships
+              </a>
+            </List>
+            <List>
               {" "}
-              <a href="/contact"> Contact</a>
-            </li>
+              <a href="/contact" isDarkMode={isDarkMode}>
+                {" "}
+                Contact
+              </a>
+            </List>
           </ul>
         </>
       )}
@@ -99,7 +138,6 @@ const NavComponent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // background-color: #000;
   font-family: "Roboto", sans-serif;
   padding: 10px 0;
 
@@ -114,15 +152,8 @@ const NavComponent = styled.div`
     padding: 0 20px;
     margin: 10px;
     font-size: 1.1rem;
-    color: #000;
   }
-  li {
-    cursor: pointer;
-  }
-  a {
-    text-decoration: none;
-    // color: #fff;
-  }
+
   img {
     width: 5em;
     height: 5em;
@@ -143,9 +174,6 @@ const NavComponent = styled.div`
       justify-content: space-evenly;
       align-items: center;
     }
-    li {
-      margin: 10px;
-    }
     img {
       width: 3em;
       height: 3em;
@@ -153,21 +181,34 @@ const NavComponent = styled.div`
   }
 `;
 
+const List = styled.li`
+  cursor: pointer;
+  margin: 10px;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  @media (max-width: 700px) {
+
+    a {
+      font-size: 1rem;
+      text-decoration: none;
+    }
+    
+  }
+}
+`;
+
 const IconWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin: 0;
   padding: 0;
   align-items: center;
 
-  .image {
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   svg {
     width: 20%;
     display: flex;
@@ -175,7 +216,34 @@ const IconWrapper = styled.div`
     align-items: center;
     cursor: pointer;
   }
-  @media (min-width: 700px) {
-    display: none;
+`;
+
+const ImageButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ToggleButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin: 0 10px;
+  padding: 0;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+  svg{
+    width: 1.5em;
+    height: 1.5em;
   }
+
+  @media (max-width: 700px) {
+    svg{
+      width: 1em;
+      height: 1em;
+    }
 `;

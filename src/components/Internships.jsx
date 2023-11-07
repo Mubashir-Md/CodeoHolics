@@ -4,9 +4,9 @@ import internship from "../assets/internships.jpg";
 import styled from "styled-components";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
-import { BiSolidLockAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { BiSolidLockAlt } from "react-icons/bi";
 
 const Internships = () => {
   const nav = useNavigate();
@@ -20,9 +20,7 @@ const Internships = () => {
         const user = data.user;
         const userEmail = user.email;
         if (userEmail === "mdmubashirahmed12345@gmail.com") {
-          nav("/postinternship");
-        } else {
-          nav("/postinternships");
+          nav("/internships/post");
         }
       })
       .catch((error) => {
@@ -42,12 +40,8 @@ const Internships = () => {
         <NavBar />
         <InternshipContent>
           <button className="google" onClick={handleSignIn}>
-            Share an Internship <BiSolidLockAlt />
+            Post an Internship <BiSolidLockAlt />
           </button>
-          <h1>Internships</h1>
-          <Internships>
-            <img src="" alt="" />
-          </Internships>
         </InternshipContent>
       </Card>
     </InternshipHome>
