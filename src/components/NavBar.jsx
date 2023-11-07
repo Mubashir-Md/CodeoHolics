@@ -43,16 +43,16 @@ const NavBar = () => {
             </li>
             <li>
               {" "}
-              <a href="/about"> About</a>
+              <a href="/events"> Events</a>
             </li>
             <li>
               {" "}
-              <a href="/events"> Events</a>
+              <a href="/resources">Resources</a>
             </li>
-            {/* <li>
+            <li>
               {" "}
-              <a href=""> Projects</a>
-            </li> */}
+              <a href="/internships">Internships</a>
+            </li>
             <li>
               {" "}
               <a href="/contact"> Contact</a>
@@ -72,16 +72,16 @@ const NavBar = () => {
             </li>
             <li>
               {" "}
-              <a href="/about"> About</a>
+              <a href="/events"> Events</a>
             </li>
             <li>
               {" "}
-              <a href="/events"> Events</a>
+              <a href="/resources">Resources</a>
             </li>
-            {/* <li>
+            <li>
               {" "}
-              <a href=""> Projects</a>
-            </li> */}
+              <a href="/internships">Internships</a>
+            </li>
             <li>
               {" "}
               <a href="/contact"> Contact</a>
@@ -102,7 +102,7 @@ const NavComponent = styled.div`
   // background-color: #000;
   font-family: "Roboto", sans-serif;
   padding: 10px 0;
-  
+
   ul {
     display: flex;
     flex-direction: row;
@@ -112,10 +112,9 @@ const NavComponent = styled.div`
     width: 40%;
     max-width: 1200px;
     padding: 0 20px;
-    margin: 0;
+    margin: 10px;
     font-size: 1.1rem;
     color: #000;
-    
   }
   li {
     cursor: pointer;

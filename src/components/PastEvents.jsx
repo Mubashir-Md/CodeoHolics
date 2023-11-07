@@ -29,5 +29,22 @@ const EventsPast = styled.div`
     width: 15em;
     height: 50%;
     border-radius: 5px;
+    margin: 10px;
+
   }
+  h2 {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 2rem;
+  }
+  p {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.5;
+  }
+  
 `;

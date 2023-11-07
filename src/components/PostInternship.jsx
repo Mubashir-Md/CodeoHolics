@@ -6,7 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import admin from "../assets/admin.jpg";
 
-const HostEvent = () => {
+const PostInternship = () => {
   const nav = useNavigate();
   const [eventData, setEventData] = useState({
     eventName: "",
@@ -38,7 +38,7 @@ const HostEvent = () => {
 
         setEventData({ ...eventData, eventPoster: imageURL });
         const docRef = await addDoc(
-          collection(db, "events"),
+          collection(db, "internships"),
           {
             eventName: eventData.eventName,
             eventDescription: eventData.eventDescription,
@@ -48,7 +48,7 @@ const HostEvent = () => {
           },
           eventData.eventName
         );
-        console.log("Event doc written with ID: ", docRef.id);
+        console.log("Internship doc written with ID: ", docRef.id);
 
         nav("/events");
       }
@@ -65,28 +65,28 @@ const HostEvent = () => {
           <HostForm action="">
             <input
               type="text"
-              placeholder="Event Name"
+              placeholder="Internship Name"
               value={eventData.eventName}
               name="eventName"
               onChange={handleInputChange}
             />
             <input
               type="text"
-              placeholder="Event Description"
+              placeholder="Internship Description"
               value={eventData.eventDescription}
               name="eventDescription"
               onChange={handleInputChange}
             />
             <input
               type="date"
-              placeholder="Event Date"
+              placeholder="Joining Date"
               value={eventData.eventDate}
               name="eventDate"
               onChange={handleInputChange}
             />
             <input
               type="text"
-              placeholder="Event Link"
+              placeholder="Form Link"
               value={eventData.eventLink}
               name="eventLink"
               onChange={handleInputChange}
@@ -94,7 +94,7 @@ const HostEvent = () => {
             <input
               type="file"
               accept="image/*"
-              placeholder="Event Poster"
+              placeholder="Company Logo"
               name="eventPoster"
               onChange={handleImageUpload}
             />
@@ -106,7 +106,7 @@ const HostEvent = () => {
   );
 };
 
-export default HostEvent;
+export default PostInternship;
 
 const Wrapper = styled.div`
     background-image: url(${admin});
@@ -116,8 +116,8 @@ const Wrapper = styled.div`
 `;
 
 const Card = styled.div`
-    backdrop-filter: blur(12px) saturate(200%);
-    -webkit-backdrop-filter: blur(14px) saturate(200%);
+    backdrop-filter: blur(4px) saturate(200%);
+    -webkit-backdrop-filter: blur(4px) saturate(200%);
     background-color: rgba(255, 255, 255, 0.78);
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
@@ -132,20 +132,24 @@ const Hosting = styled.div`
   align-items: center;
 
   h1 {
-    color: #fff;
+    
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    background-color: #000;
+   
   }
   button {
     margin: 10px;
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: #000;
-    color: #fff;
-    border: none;
+    border: 2px solid #000;
+    background-color: #fff;
     cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
   }
 `;
 const HostForm = styled.form`
@@ -154,11 +158,10 @@ const HostForm = styled.form`
   justify-content: center;
   align-items: center;
   width: 50vw;
-  // height: 50dvh;
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  background-color: #000;
+
   input {
     margin: 10px;
     padding: 10px;

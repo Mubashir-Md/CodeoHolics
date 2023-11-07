@@ -30,7 +30,7 @@ const UpcomingEvents = () => {
 
   const gotoForm = (eventName) => {
     const event = eventName;
-    nav(`/register/${event}`);
+    nav(`/events/register/${event}`);
   };
 
   const gotoDetails = (eventName) => {
@@ -43,7 +43,7 @@ const UpcomingEvents = () => {
         const user = data.user;
         const userEmail = user.email;
         if (userEmail === "mdmubashirahmed12345@gmail.com") {
-          nav(`/event-details/${eventName}`);
+          nav(`/events/event-details/${eventName}`);
         }
       })
       .catch((error) => {
@@ -56,20 +56,22 @@ const UpcomingEvents = () => {
       {upcomingEvents.map((event) => (
         <EventsUpcoming key={event.id}>
           <img src={event.eventPoster} alt="" />
-          <h2>{event.eventName}</h2>
-          <p>{event.eventDescription}</p>
-          <p>{event.eventDate}</p>
-          <Buttons>
-            <button onClick={() => gotoForm(event.eventName)} target="_blank">
-              Register Here
-            </button>
-            <button
-              onClick={() => gotoDetails(event.eventName)}
-              target="_blank"
-            >
-              Event Details
-            </button>
-          </Buttons>
+          <div className="details">
+            <h2>{event.eventName}</h2>
+            <p>{event.eventDescription}</p>
+            <p>{event.eventDate}</p>
+            <Buttons>
+              <button onClick={() => gotoForm(event.eventName)} target="_blank">
+                Register Here
+              </button>
+              <button
+                onClick={() => gotoDetails(event.eventName)}
+                target="_blank"
+              >
+                Event Details
+              </button>
+            </Buttons>
+          </div>
         </EventsUpcoming>
       ))}
     </EventsWrapper>
@@ -93,11 +95,12 @@ const EventsUpcoming = styled.div`
   align-items: center;
   border: 2px solid #000;
   margin: 10px;
+  padding: 10px;
   border-radius: 10px;
 
   img {
     width: 15em;
-    height: 50%;
+    height: 15em;
     border-radius: 5px;
   }
   button {
@@ -108,6 +111,14 @@ const EventsUpcoming = styled.div`
     color: #fff;
     border: none;
     cursor: pointer;
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
   }
 `;
 

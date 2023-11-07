@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import resource from "../assets/resources.jpg";
 import styled from "styled-components";
-import PastEvents from "./PastEvents";
+import NavBar from "./NavBar";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
-import UpcomingEvents from "./UpcomingEvent";
-import NavBar from "./NavBar";
-import Event from "../assets/events.jpg";
 import { BiSolidLockAlt } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const Events = () => {
+const Resources = () => {
   const nav = useNavigate();
   const [user, setUser] = useState("");
   const handleSignIn = () => {
@@ -36,55 +35,51 @@ const Events = () => {
     }, []);
   };
   return (
-    <Wrapper>
+    <ResourceHome>
       <Card>
         <NavBar />
-        <EventsPage>
-          {/* <OngoingEvents /> */}
+        <ResourcesContent>
           <button className="google" onClick={handleSignIn}>
-            Host an Event <BiSolidLockAlt/>
+            Share a Resource <BiSolidLockAlt />
           </button>
-          <h1>Upcoming Events</h1>
-          <Upcoming>
-            <UpcomingEvents />
-          </Upcoming>
-          <h1>Past Events</h1>
-          <Past>
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-          </Past>
-        </EventsPage>
+          <h1>Resources</h1>
+          
+        </ResourcesContent>
       </Card>
-    </Wrapper>
+    </ResourceHome>
   );
 };
 
-export default Events;
+export default Resources;
 
-const Wrapper = styled.div`
-  background-image: url(${Event});
-  background-size: cover;
+const ResourceHome = styled.div`
+  background-image: url(${resource});
   background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  height: 100dvh;
 `;
+
 const Card = styled.div`
-  backdrop-filter: blur(12px) saturate(200%);
-  -webkit-backdrop-filter: blur(14px) saturate(200%);
+  backdrop-filter: blur(10px) saturate(200%);
+  -webkit-backdrop-filter: blur(4px) saturate(200%);
   background-color: rgba(255, 255, 255, 0.78);
   border-radius: 12px;
   border: 1px solid rgba(209, 213, 219, 0.3);
   height: 100dvh;
-  overflow: auto;
 `;
 
-const EventsPage = styled.div`
-  margin: 10px;
-  padding: 10px;
+const ResourcesContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60dvh;
+  h1 {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
   button.google {
     margin: 10px auto;
     padding: 10px 20px;
@@ -101,35 +96,4 @@ const EventsPage = styled.div`
       font-size: 1.2rem;
       margin: 10px;
     }
-  }
-
-  h1 {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 2rem;
-    }
-  }
-`;
-
-const Upcoming = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Past = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
 `;

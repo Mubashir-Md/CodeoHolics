@@ -6,6 +6,7 @@ import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import fillform from "../assets/fillform.jpg";
 
 const RegistrationForm = () => {
   const nav = useNavigate();
@@ -32,68 +33,82 @@ const RegistrationForm = () => {
 
     await addDoc(registrationCollectionRef, userDetails);
     console.log("Registration doc written with ID: ", eventDocRef.id);
-    nav("/reg-success");
+    nav("/events/reg-success");
   };
   return (
-    <>
-      <NavBar />
-      <FormWrapper>
-        <h1>Register for the event here</h1>
-        <Register onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Name"
-            name="userName"
-            onChange={handleInputChange}
-            value={userDetails.userName}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            name="userEmail"
-            onChange={handleInputChange}
-            value={userDetails.userEmail}
-          />
-          <input
-            type="text"
-            placeholder="Roll Number"
-            name="userRollNo"
-            onChange={handleInputChange}
-            value={userDetails.userRollNo}
-          />
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            name="userPhoneNo"
-            onChange={handleInputChange}
-            value={userDetails.userPhoneNo}
-          />
-          <button>Submit</button>
-        </Register>
-      </FormWrapper>
-    </>
+    <Wrapper>
+      <Card>
+        <NavBar />
+        <FormWrapper>
+          <h1>Register for the event here</h1>
+          <Register onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Name"
+              name="userName"
+              onChange={handleInputChange}
+              value={userDetails.userName}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              name="userEmail"
+              onChange={handleInputChange}
+              value={userDetails.userEmail}
+            />
+            <input
+              type="text"
+              placeholder="Roll Number"
+              name="userRollNo"
+              onChange={handleInputChange}
+              value={userDetails.userRollNo}
+            />
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              name="userPhoneNo"
+              onChange={handleInputChange}
+              value={userDetails.userPhoneNo}
+            />
+            <button>Submit</button>
+          </Register>
+        </FormWrapper>
+      </Card>
+    </Wrapper>
   );
 };
 
 export default RegistrationForm;
+
+const Wrapper = styled.div`
+  background-image: url(${fillform});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100dvh;
+`;
+
+const Card = styled.div`
+  backdrop-filter: blur(8px) saturate(200%);
+  -webkit-backdrop-filter: blur(4px) saturate(200%);
+  background-color: rgba(255, 255, 255, 0.78);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+  height: 100dvh;
+`;
 
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #000;
-  color: #fff;
   padding: 10px;
   margin: 10px auto;
   border-radius: 10px;
-  width: 50%;
   h1 {
-    color: #fff;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    background-color: #000;
   }
 `;
 
@@ -112,9 +127,9 @@ const Register = styled.form`
   button {
     margin: 10px;
     padding: 10px 20px;
-    border-radius: 10px;
-    background-color: #fff;
-    color: #000;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
     border: none;
     cursor: pointer;
   }

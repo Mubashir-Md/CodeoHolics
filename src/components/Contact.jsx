@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import contact from "../assets/contact.jpg";
-import { FaGlobe, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { GrInstagram } from "react-icons/gr";
+import { BsGlobe } from "react-icons/bs";
+import { FaLinkedinIn } from "react-icons/fa";  
+import { FaXTwitter } from "react-icons/fa6";
+
 import NavBar from "./NavBar";
 
 const Contact = () => {
@@ -12,10 +16,10 @@ const Contact = () => {
         <ContactPage>
           <h1>Let's get in touch</h1>
           <ContactWrapper>
-            <FaGlobe />
-            <FaInstagram />
-            <FaLinkedin />
-            <FaTwitter />
+            <BsGlobe />
+            <GrInstagram />
+            <FaLinkedinIn />
+            <FaXTwitter />
           </ContactWrapper>
         </ContactPage>
       </Card>
@@ -60,12 +64,9 @@ const ContactWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   svg {
-    font-size: 2em;
+    font-size: 4rem;
     margin: 10px;
     padding: 10px;
-    border-radius: 50%;
-    background-color: #000;
-    color: #fff;
-    cursor: pointer;
+    border-radius: 10px;
   }
 `;
