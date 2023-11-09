@@ -10,6 +10,10 @@ import Event from "../assets/events.jpg";
 import { BiSolidLockAlt } from "react-icons/bi";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
 
+import Internpreneur from "../assets/internpreneur.jpg";
+import IOT from "../assets/iot-workshop.jpg";
+import Cadism from "../assets/cadism.jpg";
+
 const Events = () => {
   const nav = useNavigate();
   const {isDarkMode, toggleDarkMode} = useContext(ThemeContext);
@@ -52,12 +56,10 @@ const Events = () => {
           </Upcoming>
           <h1>Past Events</h1>
           <Past>
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
-            <PastEvents />
+            <PastEvents poster={Internpreneur} eventName={"Internpreneur"} eventDesc={"28 days web dev bootcamp"} />
+            <PastEvents poster={ Cadism } eventName={"Cadism"} eventDesc={"3D modeling, 3D printing and PCB designing"} />
+            <PastEvents poster={ IOT } eventName={"Hands On IOT"} eventDesc={"Workshop on IOT with Node MCU, Arduino basics"} />
+            
           </Past>
         </EventsPage>
       </Card>

@@ -32,7 +32,7 @@ const NavBar = () => {
       {windowWidth <= 700 && (
         <IconWrapper isDarkMode={isDarkMode}>
           <ImageButton className="image">
-            <img src={LogoImage} />
+            <a href="/" style={{cursor:"pointer"}}><img src={LogoImage} /></a> 
             <ToggleButton onClick={toggleDarkMode} isDarkMode={isDarkMode}>
               {isDarkMode ? <PiToggleRightFill /> : <PiToggleLeftFill />}
             </ToggleButton>
@@ -55,6 +55,13 @@ const NavBar = () => {
               <a href="/events">
                 {" "}
                 Events
+              </a>
+            </List>
+            <List isDarkMode={isDarkMode}>
+              {" "}
+              <a href="/team">
+                {" "}
+                Team
               </a>
             </List>
             <List isDarkMode={isDarkMode}>
@@ -82,7 +89,7 @@ const NavBar = () => {
       {windowWidth > 700 && (
         <>
           <ImageButton className="image">
-            <img src={LogoImage} />
+          <a href="/" style={{cursor:"pointer"}}><img src={LogoImage} /></a> 
             <ToggleButton onClick={toggleDarkMode} isDarkMode={isDarkMode}>
               {isDarkMode ? <PiToggleRightFill /> : <PiToggleLeftFill />}
             </ToggleButton>
@@ -100,6 +107,13 @@ const NavBar = () => {
               <a href="/events">
                 {" "}
                 Events
+              </a>
+            </List>
+            <List isDarkMode={isDarkMode}>
+              {" "}
+              <a href="/team">
+                {" "}
+                Team
               </a>
             </List>
             <List isDarkMode={isDarkMode}>

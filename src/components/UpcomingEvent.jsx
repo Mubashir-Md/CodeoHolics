@@ -102,8 +102,8 @@ const EventsUpcoming = styled.div`
   border-radius: 10px;
 
   img {
-    width: 15em;
-    height: 15em;
+    max-width: 350px;
+    max-height: 350px;
     border-radius: 5px;
   }
   button {

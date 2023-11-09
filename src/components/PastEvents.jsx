@@ -3,15 +3,14 @@ import styled from "styled-components";
 import Poster from "../assets/hack4mini.jpg";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
 
-const PastEvents = () => {
+const PastEvents = (props) => {
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   return (
     <EventsPast isDarkMode={isDarkMode}>
-      <img src={Poster} alt="" />
+      <img src={props.poster} alt="" />
       <div className="details">
-        <h2>Event Name</h2>
-        <p>Event Description</p>
-        <p>Event Date</p>
+        <h2>{ props.eventName} </h2>
+        <p>{props.eventDesc}</p>
       </div>
     </EventsPast>
   );
@@ -31,8 +30,8 @@ const EventsPast = styled.div`
   border-radius: 10px;
 
   img {
-    width: 15em;
-    height: 15em;
+    max-width: 350px;
+    max-height: 350px;
     border-radius: 5px;
     margin: 10px;
   }
@@ -53,6 +52,7 @@ const EventsPast = styled.div`
       font-size: 1rem;
       font-family: "Poppins", sans-serif;
       line-height: 1.5;
+      text-align: center;
       color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
     }
   }

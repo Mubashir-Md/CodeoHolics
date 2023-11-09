@@ -12,6 +12,7 @@ import Internships from "./components/Internships";
 import Resources from "./components/Resources";
 import PostInternship from "./components/PostInternship";
 import { ThemeContextProvider } from "./contexts/ThemeContextProvider";
+import Team from "./components/Team";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/team" element={<Team />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/internships" element={<Internships />} />
           <Route path="/internships/post" element={<PostInternship />} />
