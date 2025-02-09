@@ -6,30 +6,11 @@ import { collection, getDocs } from "firebase/firestore";
 import { signInWithPopup } from "firebase/auth";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
 
-const UpcomingEvents = () => {
+const UpcomingEvents = ({upcomingEvents}) => {
   const nav = useNavigate();
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [user, setUser] = useState("");
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
-
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const eventsCollection = collection(db, "events");
-        const querySnapshot = await getDocs(eventsCollection);
-        const eventsData = [];
-        querySnapshot.forEach((doc) => {
-          eventsData.push({ id: doc.id, ...doc.data() });
-        });
-        console.log(eventsData);
-        setUpcomingEvents(eventsData);
-      } catch (error) {
-        console.error("Error fetching past events: ", error);
-      }
-    };
-    fetchEvents();
-  }, []);
+  
 
   const gotoForm = (eventName) => {
     const event = eventName;

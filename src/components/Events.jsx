@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PastEvents from "./PastEvents";
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../firebase";
+import { auth, db, provider } from "../firebase";
 import UpcomingEvents from "./UpcomingEvent";
 import NavBar from "./NavBar";
 import Event from "../assets/events.jpg";
@@ -13,17 +13,47 @@ import { ThemeContext } from "../contexts/ThemeContextProvider";
 import Internpreneur from "../assets/internpreneur.jpg";
 import IOT from "../assets/iot-workshop.jpg";
 import Cadism from "../assets/cadism.jpg";
+import { collection, getDocs } from "firebase/firestore";
 
 const Events = () => {
   const nav = useNavigate();
-  const {isDarkMode, toggleDarkMode} = useContext(ThemeContext);
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+  const [events, setEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
   const [user, setUser] = useState("");
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const eventsCollection = collection(db, "events");
+        const querySnapshot = await getDocs(eventsCollection);
+        const eventsData = [];
+        querySnapshot.forEach((doc) => {
+          eventsData.push({ id: doc.id, ...doc.data() });
+        });
+        console.log(eventsData);
+        setEvents(eventsData);
+
+        const currentDate = new Date();
+        const upcoming = eventsData.filter(
+          (event) => new Date(event.eventDate) >= currentDate
+        );
+        const past = eventsData.filter(
+          (event) => new Date(event.eventDate) < currentDate
+        );
+        setUpcomingEvents(upcoming);
+        setPastEvents(past);
+      } catch (error) {
+        console.error("Error fetching upcoming events: ", error);
+      }
+    };
+    fetchEvents();
+  }, []);
   const handleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((data) => {
         setUser(data.user);
         localStorage.setItem("user", JSON.stringify(data.user));
-
         const user = data.user;
         const userEmail = user.email;
         if (userEmail === "mdmubashirahmed12345@gmail.com") {
@@ -33,14 +63,13 @@ const Events = () => {
       .catch((error) => {
         console.log(error);
       });
-
-    useEffect(() => {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(storedUser);
-      }
-    }, []);
   };
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
   return (
     <Wrapper>
       <Card isDarkMode={isDarkMode}>
@@ -48,18 +77,15 @@ const Events = () => {
         <EventsPage isDarkMode={isDarkMode}>
           {/* <OngoingEvents /> */}
           <button className="google" onClick={handleSignIn}>
-            Host an Event <BiSolidLockAlt/>
+            Host an Event <BiSolidLockAlt />
           </button>
           <h1>Upcoming Events</h1>
           <Upcoming>
-            <UpcomingEvents />
+            <UpcomingEvents upcomingEvents={upcomingEvents} />
           </Upcoming>
           <h1>Past Events</h1>
           <Past>
-            <PastEvents poster={Internpreneur} eventName={"Internpreneur"} eventDesc={"28 days web dev bootcamp"} />
-            <PastEvents poster={ Cadism } eventName={"Cadism"} eventDesc={"3D modeling, 3D printing and PCB designing"} />
-            <PastEvents poster={ IOT } eventName={"Hands On IOT"} eventDesc={"Workshop on IOT with Node MCU, Arduino basics"} />
-            
+            <PastEvents pastEvents={pastEvents} />
           </Past>
         </EventsPage>
       </Card>
@@ -79,7 +105,8 @@ const Wrapper = styled.div`
 const Card = styled.div`
   backdrop-filter: blur(12px) saturate(200%);
   -webkit-backdrop-filter: blur(14px) saturate(200%);
-  background-color: ${({isDarkMode})=> isDarkMode ? "rgba(0,0,0,0.78)" : "rgba(255, 255, 255, 0.78)"};
+  background-color: ${({ isDarkMode }) =>
+    isDarkMode ? "rgba(0,0,0,0.78)" : "rgba(255, 255, 255, 0.78)"};
   border: 1px solid rgba(209, 213, 219, 0.3);
   height: 100dvh;
   overflow: auto;
@@ -92,9 +119,10 @@ const EventsPage = styled.div`
     margin: 10px auto;
     padding: 10px 20px;
     border-radius: 10px;
-    border: ${({ isDarkMode }) => isDarkMode ? "2px solid #fff" : "2px solid #000"};
+    border: ${({ isDarkMode }) =>
+      isDarkMode ? "2px solid #fff" : "2px solid #000"};
     background: transparent;
-    color: ${({ isDarkMode }) => isDarkMode ? "#fff" : "#000"};
+    color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
     cursor: pointer;
     font-size: 1.2rem;
     display: flex;
@@ -113,7 +141,7 @@ const EventsPage = styled.div`
     border-radius: 10px;
     text-align: center;
     font-size: 2.5rem;
-    color: ${({ isDarkMode }) => isDarkMode ? "#fff" : "#000"};
+    color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
   }
 
   @media (max-width: 768px) {
@@ -129,7 +157,6 @@ const Upcoming = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
 `;
 
 const Past = styled.div`

@@ -7,9 +7,8 @@ import NavBar from "./NavBar";
 import Event from "../assets/events.jpg";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
 
-
 function EventDetails() {
-  const {isDarkMode, toggleDarkMode} = useContext(ThemeContext);
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const { eventName } = useParams();
   const [registrations, setRegistrations] = useState([]);
   useEffect(() => {
@@ -43,7 +42,7 @@ function EventDetails() {
           <h1>Event Details for {eventName}</h1>
           <RegistrationsList>
             {registrations.map((registration) => (
-              <RegistrationItem key={registration.id}>
+              <RegistrationItem key={registration.id} isDarkMode={isDarkMode}>
                 <p>Name: {registration.userName}</p>
                 <p>Email: {registration.userEmail}</p>
                 <p>Roll Number: {registration.userRollNo}</p>
@@ -62,15 +61,18 @@ export default EventDetails;
 const Wrapper = styled.div`
   background-image: url(${Event});
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position: center;
   background-attachment: fixed;
+  height: 100dvh;
 `;
 const Card = styled.div`
-  backdrop-filter: blur(12px) saturate(200%);
-  -webkit-backdrop-filter: blur(14px) saturate(200%);
+  backdrop-filter: blur(17px) saturate(200%);
+  filter: drop-shadow(10px 10px 10px white);
+  -webkit-backdrop-filter: blur(17px) saturate(200%);
   background-color: ${({ isDarkMode }) =>
-    isDarkMode ? "rgba(0,0,0,0.78)" : "rgba(255, 255, 255, 0.78)"};
+    isDarkMode ? "rgba(0,0,0,0.5)" : "rgba(255, 255, 255, 0.5)"};
+  color: ${({ isDarkMode }) => (isDarkMode ? "white" : "black")};
   border: 1px solid rgba(209, 213, 219, 0.3);
   height: 100dvh;
   overflow: auto;
@@ -86,7 +88,6 @@ const EventDetailsWrapper = styled.div`
     padding: 10px;
     border-radius: 10px;
     background-color: transparent;
-    color: ${({ isDarkMode }) => (isDarkMode ? "#000" : "#fff")};
   }
 `;
 const RegistrationsList = styled.ul`
@@ -99,11 +100,14 @@ const RegistrationsList = styled.ul`
 `;
 const RegistrationItem = styled.li`
   margin: 10px;
-  padding: 10px;
-  border: ${({ isDarkMode }) => (isDarkMode ? "2px solid #000" : "2px solid #fff")} ;
-  border-radius: 5px;
-  background-color: transparent;
-  color: ${({ isDarkMode }) => (isDarkMode ? "#000" : "#fff")};
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: ${({ isDarkMode }) =>
+    isDarkMode
+      ? "0 31.3944px 33.0467px #697C7F, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"
+      : "0 31.3944px 33.0467px #E9FCFF, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"};
+
+  color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
 
   @media (max-width: 700px) {
     padding: 5px;
