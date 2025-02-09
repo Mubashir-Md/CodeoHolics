@@ -85,7 +85,7 @@ const HostEvent = () => {
           </LoaderContainer>
         ) : (
           <Hosting>
-            <HostForm action="">
+            <HostForm action="" isDarkMode={isDarkMode}>
               <h1 style={{ textAlign: "center" }}>Let's host an event...</h1>
               <div>
                 <label htmlFor="eventName">Event Name</label>
@@ -183,9 +183,12 @@ const HostForm = styled.form`
   align-items: start;
   max-width: 600px;
   width: 100%;
-  // height: 50dvh;
-  box-shadow: 0 31.3944px 33.0467px #a7a4ff,
-    inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%);
+    box-shadow: ${({ isDarkMode }) =>
+    isDarkMode
+      ? "0 31.3944px 33.0467px #4D4D82, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"
+      : "0 31.3944px 33.0467px #a7a4ff, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"};
+
+    
   margin: 10px;
   padding: 20px;
   border-radius: 25px;

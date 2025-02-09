@@ -81,11 +81,11 @@ const Events = () => {
           </button>
           <h1>Upcoming Events</h1>
           <Upcoming>
-            <UpcomingEvents upcomingEvents={upcomingEvents} />
+            <UpcomingEvents upcomingEvents={upcomingEvents} setUpcomingEvents={setUpcomingEvents} />
           </Upcoming>
           <h1>Past Events</h1>
           <Past>
-            <PastEvents pastEvents={pastEvents} />
+            <PastEvents pastEvents={pastEvents} setPastEvents={setPastEvents} />
           </Past>
         </EventsPage>
       </Card>

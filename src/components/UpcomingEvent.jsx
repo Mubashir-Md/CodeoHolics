@@ -2,23 +2,33 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { auth, db, provider } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { signInWithPopup } from "firebase/auth";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
+import { Delete, DeleteIcon, Trash } from "lucide-react";
 
-const UpcomingEvents = ({upcomingEvents}) => {
+const UpcomingEvents = ({ upcomingEvents, setUpcomingEvents }) => {
   const nav = useNavigate();
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [user, setUser] = useState("");
-  
 
   const gotoForm = (eventName) => {
-    const event = eventName;
-    nav(`/events/register/${event}`);
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        const userDetails = {
+          userName: data.user.displayName || "Anonymous",
+          email: data.user.email,
+        }
+        nav(`/events/register/${eventName}`,{state: {userDetails}} );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const gotoDetails = (eventName) => {
-    const event = eventName;
     signInWithPopup(auth, provider)
       .then((data) => {
         setUser(data.user);
@@ -33,6 +43,12 @@ const UpcomingEvents = ({upcomingEvents}) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const deleteEvent = async (eventId) => {
+    const docRef = doc(db, "events", eventId);
+    await deleteDoc(docRef);
+    setUpcomingEvents((prev) => prev.filter((event) => event.id !== eventId));
   };
 
   return (
@@ -54,6 +70,7 @@ const UpcomingEvents = ({upcomingEvents}) => {
               >
                 Event Details
               </button>
+              <Trash onClick={() => deleteEvent(event.id)} />
             </Buttons>
           </div>
         </EventsUpcoming>
@@ -77,22 +94,29 @@ const EventsUpcoming = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: ${({isDarkMode}) => isDarkMode ? "2px solid #fff" : "2px solid #000"};
+  /* border: ${({ isDarkMode }) =>
+    isDarkMode ? "2px solid #fff" : "2px solid #000"}; */
   margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  /* padding: 10px; */
+  border-radius: 25px;
+  box-shadow: ${({ isDarkMode }) =>
+    isDarkMode
+      ? "0 31.3944px 33.0467px #243538, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"
+      : "0 31.3944px 33.0467px #ECFCFF, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"};
 
   img {
-    max-width: 350px;
+    width: 100%;
+    height: auto;
     max-height: 350px;
-    border-radius: 5px;
+    object-fit: cover;
+    border-radius: 25px 25px 0 0;
   }
   button {
     margin: 10px;
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: ${({isDarkMode}) => isDarkMode ? "#fff" : "#000"};
-    color: ${({isDarkMode}) => isDarkMode ? "#000" : "#fff"};
+    background-color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
+    color: ${({ isDarkMode }) => (isDarkMode ? "#000" : "#fff")};
     border: none;
     cursor: pointer;
   }
@@ -103,9 +127,9 @@ const EventsUpcoming = styled.div`
     align-items: center;
     padding: 10px;
     margin: 10px;
-    color: ${({isDarkMode}) => isDarkMode ? "#fff" : "#000"};
+    color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
   }
-  .details > *{
+  .details > * {
     margin: 5px;
   }
 `;
@@ -115,4 +139,8 @@ const Buttons = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  svg {
+    color: red;
+    cursor: pointer;
+  }
 `;

@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Poster from "../assets/hack4mini.jpg";
 import { ThemeContext } from "../contexts/ThemeContextProvider";
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../firebase";
+import { auth, db, provider } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { Trash } from "lucide-react";
+import { deleteDoc, doc } from "firebase/firestore";
 
-const PastEvents = ({ pastEvents }) => {
+const PastEvents = ({ pastEvents, setPastEvents }) => {
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const nav = useNavigate();
   const [user, setUser] = useState("");
@@ -27,6 +29,11 @@ const PastEvents = ({ pastEvents }) => {
         console.log(error);
       });
   };
+  const deleteEvent = async (eventId)=>{
+    const docRef = doc(db, "events", eventId);
+    await deleteDoc(docRef);
+    setPastEvents((prev)=>prev.filter((event)=>event.id !== eventId))
+  }
   return (
     <EventsWrapper>
       {pastEvents.map((event) => (
@@ -43,6 +50,7 @@ const PastEvents = ({ pastEvents }) => {
               >
                 Event Details
               </button>
+              <Trash onClick={()=>deleteEvent(event.id)} />
             </Buttons>
           </div>
         </EventsPast>
@@ -66,16 +74,20 @@ const EventsPast = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: ${({ isDarkMode }) =>
-    isDarkMode ? "2px solid #fff" : "2px solid #000"};
   margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  border-radius: 25px;
+  box-shadow: ${({ isDarkMode }) =>
+    isDarkMode
+      ? "0 31.3944px 33.0467px #243538, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"
+      : "0 31.3944px 33.0467px #ECFCFF, inset 0 -4.95701px 16.5233px rgb(188 188 188 / 40%)"};
+
 
   img {
-    max-width: 350px;
+    width: 100%;
+    height: auto;
     max-height: 350px;
-    border-radius: 5px;
+    object-fit: cover;
+    border-radius: 25px 25px 0 0;
   }
   button {
     margin: 10px;
@@ -105,4 +117,8 @@ const Buttons = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  svg{
+    color: red;
+    cursor: pointer;
+  }
 `;
